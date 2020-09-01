@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/highlanderdantas/denis-office/log"
-	"github.com/highlanderdantas/denis-office/model"
+	"./log"
+	"./model"
 )
 
 func main() {

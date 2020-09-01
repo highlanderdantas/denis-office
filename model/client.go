@@ -3,7 +3,7 @@ package model
 import (
 	"fmt"
 
-	"github.com/highlanderdantas/denis-office/util"
+	"../util"
 )
 
 type Client struct {
