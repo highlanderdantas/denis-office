@@ -53,7 +53,7 @@ func listClients() {
 		return
 	}
 
-	clientsModel := model.ConvertToArray(clients)
+	clientsModel := model.ConvertTo(clients)
 	for _, client := range clientsModel {
 		log.LogPrinter(client.ToString())
 	}

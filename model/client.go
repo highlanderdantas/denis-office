@@ -10,7 +10,7 @@ type Client struct {
 	Name string
 }
 
-func ConvertToArray(stdout []byte) []Client {
+func ConvertTo(stdout []byte) []Client {
 
 	values := util.ConvertToArray(stdout)
 	clients := []Client{}
