@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"os/exec"
+	"strings"
 
 	"./log"
 	"./model"
+	"./util"
 )
 
 func main() {
@@ -20,22 +21,23 @@ func main() {
 		case "1":
 			listClients()
 		case "2":
-			upClients()
+			pauseClients()
 		case "3":
-			pausedClients()
+			upClients()
 		case "4":
 			finish()
 		}
 	}
 }
 
+//Le a opção escolhida
 func scannerOptions() string {
 
 	log.LogPrinter("Escolha uma das opções abaixo: ")
 	log.LogSpace()
 	log.LogPrinter("1 - Listar clientes")
-	log.LogPrinter("2 - Subir clientes")
-	log.LogPrinter("3 - Pausar clientes")
+	log.LogPrinter("2 - Pausar clientes")
+	log.LogPrinter("3 - Subir clientes")
 	log.LogPrinter("4 - Sair")
 
 	var opcao string
@@ -44,14 +46,12 @@ func scannerOptions() string {
 	return opcao
 }
 
+//Lista todos clientes do cluster
 func listClients() {
 
-	clients, err := exec.Command("bash", "-c", "kubectl get namespaces -l cattle.io/creator=norman | cut -d \" \" -f 1 ").Output()
+	clients, err := model.GetClients()
 
-	if err != nil {
-		log.LogPrinter(err.Error())
-		return
-	}
+	util.ErrorHandler(err)
 
 	clientsModel := model.ConvertTo(clients)
 	for _, client := range clientsModel {
@@ -63,11 +63,41 @@ func listClients() {
 	fmt.Scanln()
 }
 
-func upClients() {
-	//implementar
+//Pausa todos clientes ou todos os clientes baseados em um banco
+func pauseClients() {
+	pause := model.Pause{}
+	log.LogPrinter("Deseja parar todos os clientes: (S/N)")
+	fmt.Scan(&pause.All)
+
+	if strings.EqualFold(pause.All, "N") {
+		log.LogPrinter("Deseja parar todos de qual banco.")
+		log.LogPrinter("1 - dboci2")
+		log.LogPrinter("2 - dboci3")
+		log.LogPrinter("3 - dbocit1")
+		fmt.Scan(&pause.DbName)
+
+		setDbName(&pause)
+		model.PauseTo(pause.DbName)
+	} else {
+		model.PauseAll()
+	}
+
 }
 
-func pausedClients() {
+//Seta um banco
+func setDbName(pause *model.Pause) {
+	switch pause.DbName {
+	case "1":
+		pause.DbName = "dboci2"
+	case "2":
+		pause.DbName = "dboci3"
+	case "3":
+		pause.DbName = "dbocit1"
+	}
+}
+
+//Levanta todos clientes baseado num banco e um tempo
+func upClients() {
 	//implementar
 }
 
