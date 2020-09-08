@@ -76,7 +76,7 @@ func pauseClients() {
 		log.LogPrinter("3 - dbocit1")
 		fmt.Scan(&pause.DbName)
 
-		setDbName(&pause)
+		setDbName(pause.DbName)
 		model.PauseTo(pause.DbName)
 	} else {
 		model.PauseAll()
@@ -85,20 +85,35 @@ func pauseClients() {
 }
 
 //Seta um banco
-func setDbName(pause *model.Pause) {
-	switch pause.DbName {
+func setDbName(dbName string) {
+	switch dbName {
 	case "1":
-		pause.DbName = "dboci2"
+		dbName = "dboci2"
 	case "2":
-		pause.DbName = "dboci3"
+		dbName = "dboci3"
 	case "3":
-		pause.DbName = "dbocit1"
+		dbName = "dbocit1"
 	}
 }
 
 //Levanta todos clientes baseado num banco e um tempo
 func upClients() {
-	//implementar
+	up := model.Up{}
+	log.LogPrinter("Deseja subir quantos clientes de forma gradual: (3/5)")
+	fmt.Scan(&up.Amount)
+
+	log.LogPrinter("De quanto em quantos minutos: (3/5)")
+	fmt.Scan(&up.Timeout)
+
+	log.LogPrinter("Deseja parar todos de qual banco.")
+	log.LogPrinter("1 - dboci2")
+	log.LogPrinter("2 - dboci3")
+	log.LogPrinter("3 - dbocit1")
+	fmt.Scan(&up.DbName)
+
+	setDbName(up.DbName)
+
+	model.UpTo(up)
 }
 
 func finish() {
