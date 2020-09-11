@@ -87,7 +87,7 @@ func pauseClients() {
 //Levanta todos clientes baseado num banco e um tempo
 func upClients() {
 	up := model.Up{}
-	log.LogPrinter("Deseja subir quantos clientes de forma gradual: (3/5)")
+	log.LogPrinter("Deseja subir quantos deployments de forma gradual: (3/5)")
 	fmt.Scan(&up.Amount)
 
 	log.LogPrinter("De quanto em quantos minutos: (3/5)")

@@ -19,9 +19,15 @@ func UpTo(up Up) {
 
 	deploys := GetDeploysByDbNameIsDown(up.DbName)
 
+	amount := up.Amount
 	for _, deploy := range deploys {
 		scaleUp(deploy.Namespace, deploy.Name)
-		setTimeout(up.Timeout)
+
+		amount--
+		if amount == 0 {
+			amount = up.Amount
+			setTimeout(up.Timeout)
+		}
 	}
 
 	log.LogSpace(2)

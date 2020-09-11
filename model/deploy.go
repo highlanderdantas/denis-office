@@ -26,7 +26,6 @@ func GetDeploysBy(dbName string, isDown bool) []Deploy {
 	}
 
 	command := fmt.Sprintf("kubectl get deploy --no-headers -A -l cloud.dbName=%s %s| awk '{print $1 \",\" $2}' ", dbName, grep)
-	log.LogPrinter(command)
 	cmd, err := exec.Command("bash", "-c", command).Output()
 
 	util.ErrorHandler(err)
