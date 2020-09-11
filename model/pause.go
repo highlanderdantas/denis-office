@@ -8,8 +8,8 @@ import (
 
 //Representa a opção de pausar
 type Pause struct {
-	All    string
-	DbName string
+	Operation
+	All string
 }
 
 //Pausa todos os deploys online com uma tag

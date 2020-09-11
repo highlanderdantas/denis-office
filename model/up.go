@@ -9,9 +9,9 @@ import (
 
 //Representa a opção de subir
 type Up struct {
+	Operation
 	Timeout int
 	Amount  int
-	DbName  string
 }
 
 //Levanta os clientes gradualmente
