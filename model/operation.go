@@ -5,7 +5,7 @@ type Operation struct {
 	DbName string
 }
 
-//Seta um banco
+//SetDbName seta um banco
 func (o *Operation) SetDbName() {
 	switch o.DbName {
 	case "1":

@@ -3,16 +3,16 @@ package model
 import (
 	"fmt"
 
-	"../log"
+	"github.com/highlanderdantas/denis-office/log"
 )
 
-//Representa a opção de pausar
+//Pause Representa a opção de pausar
 type Pause struct {
 	Operation
 	All string
 }
 
-//Pausa todos os deploys online com uma tag
+//PauseTo Pausa todos os deploys online com uma tag
 func PauseTo(dbName string) {
 
 	deploys := GetDeploysByDbNameIsUp(dbName)
@@ -27,6 +27,7 @@ func PauseTo(dbName string) {
 
 }
 
+//PauseAll pausa todos os clientes
 func PauseAll() {
 
 	deploys := GetDeploy()

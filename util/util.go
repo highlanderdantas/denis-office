@@ -4,7 +4,7 @@ import (
 	"os"
 	"strings"
 
-	"../log"
+	"github.com/highlanderdantas/denis-office/log"
 )
 
 //Remove um index especifico de um array

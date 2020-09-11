@@ -5,17 +5,17 @@ import (
 	"os/exec"
 	"strings"
 
-	"../log"
-	"../util"
+	"github.com/highlanderdantas/denis-office/log"
+	"github.com/highlanderdantas/denis-office/util"
 )
 
-//Representa uma deployment no kubernetes
+//Deploy representa uma deployment no kubernetes
 type Deploy struct {
 	Namespace string
 	Name      string
 }
 
-//Pega todos os deploys baseado num banco online ou offline
+//GetDeploysBy pega todos os deploys baseado num banco online ou offline
 func GetDeploysBy(dbName string, isDown bool) []Deploy {
 	var grep string
 
@@ -33,17 +33,17 @@ func GetDeploysBy(dbName string, isDown bool) []Deploy {
 	return ConvertToDeploy(cmd)
 }
 
-//Pega todos os deploys de um banco offline
+//GetDeploysByDbNameIsDown pega todos os deploys de um banco offline
 func GetDeploysByDbNameIsDown(dbName string) []Deploy {
 	return GetDeploysBy(dbName, true)
 }
 
-//Pega todos os deploys de um banco online
+//GetDeploysByDbNameIsUp pega todos os deploys de um banco online
 func GetDeploysByDbNameIsUp(dbName string) []Deploy {
 	return GetDeploysBy(dbName, false)
 }
 
-//Pega todos os deploys
+//GetDeploy pega todos os deploys
 func GetDeploy() []Deploy {
 
 	command := fmt.Sprintf("kubectl get deploy --no-headers -A | grep -e 1/1 -e 0/1 | awk '{print $1 \",\" $2}' ")
@@ -54,7 +54,7 @@ func GetDeploy() []Deploy {
 	return ConvertToDeploy(cmd)
 }
 
-//Converte um array de bytes em um array de Deploy
+//ConvertToDeploy converte um array de bytes em um array de Deploy
 func ConvertToDeploy(value []byte) []Deploy {
 	deploysOut := string(value)
 	deploysStd := strings.Split(deploysOut, "\n")
@@ -73,12 +73,12 @@ func ConvertToDeploy(value []byte) []Deploy {
 	return deploys
 }
 
-//Verifica se a variavel
+//isEmpty verifica se a variavel
 func isEmpty(value []string) bool {
 	return value != nil && value[0] != "" && value[1] != ""
 }
 
-//Abaixa a scala de um deployment de um determinado namespace
+//scaleDown abaixa a scala de um deployment de um determinado namespace
 func scaleDown(namespace string, name string) {
 	command := getScaleBy(name, namespace, false)
 
@@ -90,7 +90,7 @@ func scaleDown(namespace string, name string) {
 	util.ErrorHandler(err)
 }
 
-//Abaixa a scala de um deployment de um determinado namespace
+//scaleUp abaixa a scala de um deployment de um determinado namespace
 func scaleUp(namespace string, name string) {
 	command := getScaleBy(name, namespace, true)
 
@@ -102,7 +102,7 @@ func scaleUp(namespace string, name string) {
 	util.ErrorHandler(err)
 }
 
-//Monta o comando para abaixar ou subir escala de um deployment
+//getScaleBy monta o comando para abaixar ou subir escala de um deployment
 func getScaleBy(name string, namespace string, isUp bool) string {
 	var count int
 	if isUp {

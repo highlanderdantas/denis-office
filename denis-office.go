@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"./log"
-	"./model"
-	"./util"
+	"github.com/highlanderdantas/denis-office/log"
+	"github.com/highlanderdantas/denis-office/model"
+	"github.com/highlanderdantas/denis-office/util"
 )
 
 func main() {
@@ -30,7 +30,7 @@ func main() {
 	}
 }
 
-//Le a opção escolhida
+//scannerOptions le a opção escolhida
 func scannerOptions() string {
 
 	log.LogPrinter("Escolha uma das opções abaixo: ")
@@ -46,7 +46,7 @@ func scannerOptions() string {
 	return opcao
 }
 
-//Lista todos clientes do cluster
+//listClients lista todos clientes do cluster
 func listClients() {
 
 	clients, err := model.GetClients()
@@ -63,7 +63,7 @@ func listClients() {
 	fmt.Scanln()
 }
 
-//Pausa todos clientes ou todos os clientes baseados em um banco
+//pauseClients pausa todos clientes ou todos os clientes baseados em um banco
 func pauseClients() {
 	pause := model.Pause{}
 	log.LogPrinter("Deseja parar todos os clientes: (S/N)")
@@ -84,7 +84,7 @@ func pauseClients() {
 
 }
 
-//Levanta todos clientes baseado num banco e um tempo
+//upClients levanta todos clientes baseado num banco e um tempo
 func upClients() {
 	up := model.Up{}
 	log.LogPrinter("Deseja subir quantos deployments de forma gradual: (3/5)")
@@ -104,6 +104,7 @@ func upClients() {
 	model.UpTo(up)
 }
 
+//finish seta um msg de finalização
 func finish() {
 	log.LogPrinter("Encerrando programa!!")
 }
